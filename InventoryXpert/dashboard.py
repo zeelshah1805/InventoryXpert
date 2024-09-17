@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
+from employee import employeeClass
 import time
 
 class InventoryXpert:
@@ -43,7 +44,7 @@ class InventoryXpert:
         self.root.after(1000, self.update_clock)  # Update every second
 
     def setup_left_menu(self):
-        self.MenuLogo = Image.open("images/menu.png")
+        self.MenuLogo = Image.open("Images/menu.png")
         self.MenuLogo = self.MenuLogo.resize((200, 200))
         self.MenuLogo = ImageTk.PhotoImage(self.MenuLogo)
         
@@ -53,9 +54,9 @@ class InventoryXpert:
         lbl_menuLogo = Label(LeftMenu, image=self.MenuLogo, bg="#00B4D8")
         lbl_menuLogo.pack(side=TOP, fill=X, pady=20)
 
-        menu_items = ["Employee", "Product", "Supplier", "Customer", "Category", "Sales", "Exit"]
-        for item in menu_items:
-            btn = Label(LeftMenu, text=item, font=("Open Sans", 18), bg="#00B4D8", fg="white", cursor="hand2")
+        menu_items = [("Employee", self.employee), ("Product", self.product), ("Supplier", self.supplier), ("Customer", self.customer), ("Category", self.category), ("Sales", self.sales), ("Exit", self.exit)]
+        for item, command in menu_items:
+            btn = Button(LeftMenu, text=item, command=command, font=("Open Sans", 18), bg="#00B4D8", fg="white", cursor="hand2")
             btn.pack(side=TOP, fill=X, padx=10, pady=10)
             btn.bind("<Enter>", lambda e, btn=btn: btn.config(fg="#03045E"))
             btn.bind("<Leave>", lambda e, btn=btn: btn.config(fg="white"))
@@ -104,8 +105,30 @@ class InventoryXpert:
         canvas.itemconfig(rect, fill=original_color)
 
     def setup_footer(self):
-        footer = Label(self.root, text="Copyright 2023 InventoryXpert. All rights reserved.", font=("Open Sans", 12), bg="#6C757D", fg="white")
+        footer = Label(self.root, text="Copyright 2024 InventoryXpert. All rights reserved.", font=("Open Sans", 12), bg="#6C757D", fg="white")
         footer.place(x=0, y=660, relwidth=1, height=40)
+
+    def employee(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = employeeClass(self.new_win)
+
+    def product(self):
+        print("Product clicked")
+
+    def supplier(self):
+        print("Supplier clicked")
+
+    def customer(self):
+        print("Customer clicked")
+
+    def category(self):
+        print("Category clicked")
+
+    def sales(self):
+        print("Sales clicked")
+
+    def exit(self):
+        self.root.destroy()
 
 if __name__ == "__main__":
     root = Tk()
